@@ -88,21 +88,11 @@ main = do
     (line_cst:line_scores:lines_libraries) <- lines <$> readFile file
     let (n_books, n_libraries, n_days) = readCst line_cst
     let score = readScores line_scores
-    -- print ("score: " ++ show score)
     let score_array = array (0, n_books-1) [(i,s) | (s,i) <- zip score [0..] ]
     let libraries = readLibraries lines_libraries
-    -- print libraries
-    -- print [n_books, n_libraries, n_days]
-    -- print score_array
     let (best_library, best_books, other_libraries, new_score) = bestLibrary libraries n_days score_array
-    -- print ("best library: " ++ show best_library)
-    -- print ("best_books:" ++ show best_books)
-    -- print ("others: " ++ show other_libraries)
-    -- print ("score: " ++ show new_score)
     let solution = solve libraries n_days score_array
     let output = map printSingle solution where
         printSingle (lib, books) = show (library_id lib) ++ " " ++ show (length books) ++ "\n" ++ (printBooks books)
-    -- print output
     putStrLn (show (length solution))
     putStrLn (intercalate "\n" output)
-    -- print ("solution:" ++ show solution)
