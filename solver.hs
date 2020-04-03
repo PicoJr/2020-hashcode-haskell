@@ -53,7 +53,8 @@ maxBooksSent :: Library -> Int -> Int
 maxBooksSent lib days_left = (days_left - (signup_delay lib)) * (books_per_day lib)
 
 nBestBooks :: Int -> [Int] -> (Int -> Int) -> [Int]
-nBestBooks n books score = take n (sortOn score books)
+nBestBooks n books score = take n (sortOn score_rev books) where
+    score_rev book = - (score book)
 
 libraryBestBooks :: Library -> Int -> (Int -> Int) -> [Int]
 libraryBestBooks lib days_left score = nBestBooks mbs (books lib) score where
